@@ -9,24 +9,21 @@ namespace AESFILE
     {
         static void Main(string[] args)
         {
-
             string filePath;
             string input;
             string key;
-
-            Console.WriteLine(" __  __            _   _             ______                             _             ");
-            Console.WriteLine("|  \\/  |          | | (_)           |  ____|                           | |            ");
-            Console.WriteLine("| \\  / | __ _ _ __| |_ _ _ __  ___  | |__   _ __   ___ _ __ _   _ _ __ | |_ ___  _ __ ");
-            Console.WriteLine("| |\\/| |/ _` | '__| __| | '_ \\/ __| |  __| | '_ \\ / __| '__| | | | '_ \\| __/ _ \\| '__|");
-            Console.WriteLine("| |  | | (_| | |  | |_| | | | \\__ \\ | |____| | | | (__| |  | |_| | |_) | || (_) | |   ");
-            Console.WriteLine("|_|  |_|\\__,_|_|   \\__|_|_| |_|___/ |______|_| |_|\\___|_|   \\__, | .__/ \\__\\___/|_|   ");
-            Console.WriteLine("                                                             __/ | |                  ");
-            Console.WriteLine("                                                            |___/|_|                  ");
+            
+            Console.WriteLine("    _    _____ ____    _____                             _             ");
+            Console.WriteLine("   / \\  | ____/ ___|  | ____|_ __   ___ _ __ _   _ _ __ | |_ ___  _ __ ");
+            Console.WriteLine("  / _ \\ |  _| \\___ \\  |  _| | '_ \\ / __| '__| | | | '_ \\| __/ _ \\| '__|");
+            Console.WriteLine(" / ___ \\| |___ ___) | | |___| | | | (__| |  | |_| | |_) | || (_) | |   ");
+            Console.WriteLine("/_/   \\_\\_____|____/  |_____|_| |_|\\___|_|   \\__, | .__/ \\__\\___/|_|   ");
+            Console.WriteLine("                                             |___/|_|                  ");
             Console.WriteLine(" ");
             Console.WriteLine("Info: version 1.0.0");
             Console.WriteLine("Info: Do not abuse this software!");
             Console.WriteLine("Info: Use good passwords (you can use my password generator software)");
-            Console.WriteLine("Info: For more Information check out: http://github.com/martin-coding/aes-file");
+            Console.WriteLine("Info: For more Information check out: https://github.com/martin-coding/aes-file/");
             Console.WriteLine(" ");
 
             while (true)
