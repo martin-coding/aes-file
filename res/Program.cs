@@ -9,7 +9,6 @@ namespace AESFILE
     {
         static void Main(string[] args)
         {
-            //https://www.youtube.com/watch?v=Xna-5XBXck8
 
             string filePath;
             string input;
