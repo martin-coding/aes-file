@@ -1,0 +1,22 @@
+<Window x:Class="AESFILE.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AESFILE"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="375" Width="750">
+    <Grid>
+        <Label Content="Path:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.179,-0.612" FontSize="22"/>
+        <TextBox x:Name="pathBox" HorizontalAlignment="Left" Height="30" Margin="10,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="600" FontSize="20"/>
+        <Button x:Name="fileBtn" Content="Browse file" HorizontalAlignment="Left" Margin="620,55,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="BrowseFile" RenderTransformOrigin="0.548,1.131"/>
+        <Button x:Name="clrBtn" Content="Clear" HorizontalAlignment="Left" Margin="10,298,0,0" VerticalAlignment="Top" Width="710" Height="30" Click="Clear" RenderTransformOrigin="0.548,1.131"/>
+        <Button x:Name="encBtn" Content="Encrypt file" HorizontalAlignment="Left" Margin="10,257,0,0" VerticalAlignment="Top" Width="340" Height="30" Click="Encrypt" RenderTransformOrigin="0.548,1.131"/>
+        <Button x:Name="decBtn" Content="Decrypt file" HorizontalAlignment="Left" Margin="380,257,0,0" VerticalAlignment="Top" Width="340" Height="30" Click="Decrypt" RenderTransformOrigin="0.548,1.131"/>
+        <Label Content="Password:" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.179,-0.612" FontSize="22"/>
+        <PasswordBox x:Name="pwBox" HorizontalAlignment="Left" Margin="10,135,0,0" VerticalAlignment="Top" Width="710" Height="30" FontSize="20"/>
+        <Label Content="Initialization vector:" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.179,-0.612" FontSize="22"/>
+        <PasswordBox x:Name="ivBox" HorizontalAlignment="Left" Margin="10,215,0,0" VerticalAlignment="Top" Width="710" Height="30" FontSize="20"/>
+
+    </Grid>
+</Window>
