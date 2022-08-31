@@ -1,5 +1,7 @@
+using System;
 using System.IO;
 using System.Text;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Windows;
 using Microsoft.Win32;
@@ -8,9 +10,8 @@ namespace AESFILE
 {
     public partial class MainWindow : Window
     {
-        string filePath;
-        string key;
-        string iv;
+        private string filePath;
+        private string key;
 
         public MainWindow()
         {
@@ -28,18 +29,17 @@ namespace AESFILE
 
         private void Encrypt(object sender, RoutedEventArgs e)
         {
-            if (pathBox.Text != "")
+            if (pathBox.Text != string.Empty)
             {
-                if (pwBox.Password != "" && ivBox.Password != "")
+                if (pwBox.Password != string.Empty)
                 {
                     filePath = pathBox.Text;
                     key = pwBox.Password;
-                    iv = ivBox.Password;
-                    EncryptFile(filePath, key, iv);
+                    EncryptFile(filePath, key);
                 }
                 else
                 {
-                    MessageBox.Show("Please choose your key", "ERROR - missing");
+                    MessageBox.Show("Please set your password", "ERROR - missing");
                 }
             }
             else
@@ -50,23 +50,22 @@ namespace AESFILE
 
         private void Decrypt(object sender, RoutedEventArgs e)
         {
-            if (pathBox.Text != "")
+            if (pathBox.Text != string.Empty)
             {
-                if (pwBox.Password != "" && ivBox.Password != "")
+                if (pwBox.Password != string.Empty)
                 {
                     filePath = pathBox.Text;
                     key = pwBox.Password;
-                    iv = ivBox.Password;
-                    DecryptFile(filePath, key, iv);
+                    DecryptFile(filePath, key);
                 }
                 else
                 {
-                    MessageBox.Show("Enter your key", "ERROR - missing");
+                    MessageBox.Show("Enter your password", "ERROR - missing");
                 }
             }
             else
             {
-                MessageBox.Show("Select your file", "ERROR - missing");
+                MessageBox.Show("Choose a file", "ERROR - missing");
             }
         }
 
@@ -74,7 +73,6 @@ namespace AESFILE
         {
             pathBox.Text = "";
             pwBox.Password = "";
-            ivBox.Password = "";
         }
 
         static byte[] Pw(string value)
@@ -86,24 +84,21 @@ namespace AESFILE
                 return data;
             }
         }
-        static byte[] Iv(string value)
-        {
-            using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
-            {
-                ASCIIEncoding ascii = new ASCIIEncoding();
-                byte[] data = md5.ComputeHash(ascii.GetBytes(value));
-                return data;
-            }
-        }
 
-        static void EncryptFile(string filePath, string key, string iv)
+        static void EncryptFile(string filePath, string key)
         {
+            Random rnd = new Random();
+
+            byte[] iv = new Byte[16];
+            rnd.NextBytes(iv);
+
             byte[] plainContent = File.ReadAllBytes(filePath);
+
             using (AesCryptoServiceProvider cryptoProvider = new AesCryptoServiceProvider())
             {
                 cryptoProvider.BlockSize = 128;
                 cryptoProvider.KeySize = 256;
-                cryptoProvider.IV = Iv(iv);
+                cryptoProvider.IV = iv;
                 cryptoProvider.Key = Pw(key);
                 cryptoProvider.Mode = CipherMode.CFB;
                 cryptoProvider.Padding = PaddingMode.PKCS7;
@@ -115,20 +110,23 @@ namespace AESFILE
 
                     cryptoStream.Write(plainContent, 0, plainContent.Length);
                     cryptoStream.FlushFinalBlock();
-                    File.WriteAllBytes(filePath, memStream.ToArray());
+                    File.WriteAllBytes(filePath, iv.Concat(memStream.ToArray()).ToArray());
                     MessageBox.Show("File successfully encrypted!", "Done");
                 }
             }
         }
 
-        static void DecryptFile(string filePath, string key, string iv)
+        static void DecryptFile(string filePath, string key)
         {
-            byte[] encrypted = File.ReadAllBytes(filePath);
+            byte[] data = File.ReadAllBytes(filePath);
+            byte[] iv = data.Take(16).ToArray();
+            byte[] encrypted = data.Skip(16).ToArray();
+
             using (AesCryptoServiceProvider cryptoProvider = new AesCryptoServiceProvider())
             {
                 cryptoProvider.BlockSize = 128;
                 cryptoProvider.KeySize = 256;
-                cryptoProvider.IV = Iv(iv);
+                cryptoProvider.IV = iv;
                 cryptoProvider.Key = Pw(key);
                 cryptoProvider.Mode = CipherMode.CFB;
                 cryptoProvider.Padding = PaddingMode.PKCS7;
